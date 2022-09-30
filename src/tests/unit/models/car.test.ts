@@ -4,14 +4,14 @@ import chai from 'chai';
 const { expect } = chai;
 import CarModel from '../../../models/car.model'
 import { Model } from 'mongoose';
-import  {carMock, carMockID}  from '../../mocks/carMocks'
+import  {carMock, carMockWithID}  from '../../mocks/carMocks'
 
-describe('Teste a Model Car', () => {
+describe('Teste a Car Model', () => {
   const carModel = new CarModel();
    before(async () => {
     sinon
        .stub(Model, 'create')
-       .resolves(carMockID);
+       .resolves(carMockWithID);
    });
 
    after(()=>{
@@ -22,7 +22,7 @@ describe('Teste a Model Car', () => {
     const newCar = await carModel.create(carMock);
     console.log(newCar, 'line 23');
     
-    expect(newCar).to.be.deep.equal(carMockID)
+    expect(newCar).to.be.deep.equal(carMockWithID)
    });
 
  });
