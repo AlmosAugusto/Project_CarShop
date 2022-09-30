@@ -4,9 +4,9 @@
 const { expect } = chai;
 import { ZodError } from 'zod';
 import { Model } from 'mongoose';
-import CarModel from '../../../models/car.model'
+import CarModel from '../../../models/car.model';
 import CarService from '../../../services/car.service';
-import {carMock, carMockWithID}  from '../../mocks/carMocks'
+import {carMock, carMockWithID}  from '../../mocks/carMocks';
 
 
 
