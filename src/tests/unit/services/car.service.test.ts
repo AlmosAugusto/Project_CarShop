@@ -15,12 +15,13 @@ import { ErrorTypes } from '../../../errors/catalogs';
   const carModel = new CarModel();
   const carService = new CarService(carModel); 
    before(async () => {
-    sinon
-    .stub(Model, 'create')
-    .resolves(carMockWithID);
+    sinon.stub(Model, 'create').resolves(carMockWithID);
     sinon.stub(Model, 'findOne')
 		.onCall(0).resolves(carMockWithID) 
-		.onCall(1).resolves(null); 
+		.onCall(1).resolves(null)
+    sinon.stub(Model, 'find').resolves([carMockWithID]);
+
+
    });
 
    after(()=>{
@@ -58,7 +59,7 @@ import { ErrorTypes } from '../../../errors/catalogs';
 			expect(carFound).to.be.deep.equal(carMockWithID);
 		});
 
-		it('Failure', async () => {
+		it('Testa se falha', async () => {
 			try {
 				await carService.readOne(carMockWithID._id);
 			} catch (error:any) {
@@ -66,6 +67,13 @@ import { ErrorTypes } from '../../../errors/catalogs';
         expect(error.message).to.be.deep.equal(ErrorTypes.EntityNotFound);
 			}
 
+		});
+	});
+  describe('Testa se retorna todos os carros', () => {
+		it('Testa se retorna um array de carros', async () => {
+			const carFound = await carService.read();
+
+			expect(carFound).to.be.deep.equal([carMockWithID]);
 		});
 	});
 

@@ -17,9 +17,10 @@ import CarController from '../../../controllers/car.controller';
 
    before(() => {
      sinon
-     .stub(carService, 'create')
-    .resolves(carMock);
+     .stub(carService, 'create').resolves(carMock);
     sinon.stub(carService, 'readOne').resolves(carMock);
+    sinon.stub(carService, 'read').resolves([carMock]);
+
 
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns(res);
@@ -46,5 +47,16 @@ import CarController from '../../../controllers/car.controller';
       expect((res.json as sinon.SinonStub).calledWith(carMock)).to.be.true;
     });
   });
+
+  describe('Testa se retorna todos os carros', () => {
+    it('Testa se o carro com id correto é retornado corretamente', async () => {
+      await carController.read(req, res);
+
+      expect((res.status as sinon.SinonStub).calledWith(200)).to.be.true;
+      expect((res.json as sinon.SinonStub).calledWith([carMock])).to.be.true;
+    });
+  });
+
+  
 
  });
